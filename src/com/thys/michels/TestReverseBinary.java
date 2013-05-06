@@ -36,7 +36,7 @@ public class TestReverseBinary {
 	@Test
 	public void testScannerAllInput()
 	{
-		//assertEquals(15, ReverseBinaryNumbers.readAll(setupScanner()).length());
+		assertEquals(31, ReverseBinaryNumbers.readAll(setupScanner()).length());
 	}
 	
 	@Test

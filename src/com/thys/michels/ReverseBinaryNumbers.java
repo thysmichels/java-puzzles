@@ -15,18 +15,18 @@ public class ReverseBinaryNumbers {
     private static Scanner scanner = new Scanner(new BufferedInputStream(System.in), charsetName);
 
  	public static String readAll(Scanner scanner) {
-	        if (!scanner.hasNextLine()) return null;
-	        return scanner.useDelimiter("\\A").next();
+ 		if (!scanner.hasNextLine()) return null;
+ 			return scanner.useDelimiter("\\A").next();
 	}
 	
 	public static List<Integer> readInts(Scanner scanner) {
-	        String[] fields = readAll(scanner).trim().split("\\s+");
-	        List<Integer> vals = new ArrayList<Integer>();
-	        for (String field : fields)
-	        {
-	        	vals.add( Integer.parseInt(field));
-	        }
-	        return vals;
+		String[] fields = readAll(scanner).trim().split("\\s+");
+	    List<Integer> vals = new ArrayList<Integer>();
+	    for (String field : fields)
+	    {
+	    	vals.add( Integer.parseInt(field));
+	    }
+	    return vals;
 	}
 	
 	public static Integer reverseBinaryIntegerNumber(Integer inputNumber)

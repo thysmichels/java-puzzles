@@ -1,4 +1,4 @@
-package com.thys.michels;
+package com.thys.michels.reversebinarynumber;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;

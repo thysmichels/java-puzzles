@@ -1,4 +1,4 @@
-package com.thys.michels;
+package com.thys.michels.reversebinarynumber;
 
 import java.io.BufferedInputStream;
 import java.util.ArrayList;

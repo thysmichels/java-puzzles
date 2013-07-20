@@ -1,71 +1,34 @@
 package com.thys.michels.zipsong;
 
 import java.io.BufferedInputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Collections;
 import java.util.Scanner;
-
+import java.util.TreeMap;
 /*
  * Author: Thys Michels
  * Website: http://www.thysmichels.com
  */
-
 public class ZipSong {
-	
-	 private static String charsetName = "UTF-8";
-	 private static Scanner scanner = new Scanner(new BufferedInputStream(System.in), charsetName);
-
-	 public static String readAll(Scanner scanner) {
-	 		if (!scanner.hasNextLine()) return null;
-	 			return scanner.useDelimiter("\\A").next();
-	}
-	 
-	 public static HashMap<String, List<String>> readInts(Scanner scanner) {
-		 String[] fields = readAll(scanner).trim().split("\\r?\\n");
-		 HashMap<String, List<String>> vals = new HashMap<String, List<String>>();
-		 Integer counter = 0;
-		 for (String field : fields)
-		 {
-			 counter++;
-			 List<String> songInfo = new ArrayList<String>();
-			 for (String song : field.trim().split("\\s+"))
-			 {
-				 if (counter == 1)
-				 {
-					 if (Integer.parseInt(song) > 0 &&  Integer.parseInt(song) < 50001)
-						 songInfo.add(song);
-				 }
-				 else
-				 {
-					 if (songInfo.size() == 0 && Integer.valueOf(song) >0 && Integer.valueOf(song) < Math.pow(10,12))
-					 {
-						 songInfo.add(song);
-					 }
-					 else if (songInfo.size() == 1 && song.length() < 31)
-					 {
-						 songInfo.add(song);
-					 }
-				 }
-			 }
-				 
-			 
-			 vals.put(counter.toString(), songInfo);
-		 }
-		 return vals;
-	}
-	 
-	public static List<String> printSongsQuality(HashMap<String, List<String>> songs)
-	{
-		//1 ² n ² 50000, 1 ² m ² n
-		
-		return null;
-	}
-	
-	public static void main(String[] agrs)
-	{
-		
-	}
-
+	private static String[] songQualityTotal;
+	public static void main(String[] agrs){
+		String data = "15 3\n197812 re_hash\n78906 5_4\n189518 tomorrow_comes_today\n39453 new_genious\n210492 clint_eastwood\n26302 man_research\n22544 punk\n19727 sound_check\n17535 double_bass\n18782 rock_the_house\n198189 19_2000\n13151 latin_simone\n12139 starshine\n11272 slow_country\n10521 m1_a1\n";
+		InputStream stdin = System.in;
+		System.setIn(new ByteArrayInputStream(data.getBytes()));
+		Scanner scanner = new Scanner(System.in);
+		System.setIn(stdin);
+		songQualityTotal = scanner.nextLine().split("\\s+");
+		TreeMap<Long, String> listOfSongsAndAlbums = new TreeMap<Long, String>(Collections.reverseOrder());
+		int rowCounter = 1;
+		for (String field : scanner.useDelimiter("\\A").next().trim().split("[\\r\\n]+")){
+			rowCounter++;
+			Long songCount = Long.valueOf(field.trim().split("\\s+")[0]);
+			String songName = field.trim().split("\\s+")[1];
+			if (songCount >= 0 && songCount <= Math.pow(10,12) && songName.length()<=30 && songName.matches("^[a-z0-9_]+"))
+				listOfSongsAndAlbums.put(songCount*(rowCounter), songName);
+		}
+		for (String songResult : listOfSongsAndAlbums.values())
+			System.out.println(songResult);
+		}
 }

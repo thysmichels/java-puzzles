@@ -1,34 +1,37 @@
 package com.thys.michels.codechef;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Factorial {
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(new BufferedInputStream(System.in), "UTF-8");
+		String data = "6 \n 3 \n 60 \n 100 \n 1024 \n 23456\n 8735373\n";
+		InputStream stdin = System.in;
+		System.setIn(new ByteArrayInputStream(data.getBytes()));
+		Scanner scanner = new Scanner(System.in);
+		System.setIn(stdin);
+		//Scanner scanner = new Scanner(new BufferedInputStream(System.in), "UTF-8");
+		scanner.nextLine();
 		String[] fields = scanner.useDelimiter("\\A").next().trim().split("[\\r\\n]+");
 		for (String field : fields){
-			System.out.println(countZeros(Integer.parseInt(field.trim())));
+			System.out.println(getNumberOfTrailingZeros(Integer.parseInt(field.trim()),getFactorFive(Integer.parseInt(field.trim()))));
 		}
 	}
-	public static BigInteger factorial(int number) {
-		BigInteger ans = new BigInteger("1");
-		while (number > 0) {
-			ans = ans.multiply(new BigInteger(Integer.toString(number)));
-			number -= 1;
-		}
-		return ans;
+	
+	public static int getNumberOfTrailingZeros(int number, int factorfive){
+		int trailingzeros = 0;
+		for (int k= 1; k<=factorfive; k++)
+			trailingzeros += Math.floor(number/Math.pow(5,k));
+		return trailingzeros;
 	}
-	public static int countZeros(int number) {
-		final BigInteger zero = new BigInteger("0");
-		final BigInteger ten = new BigInteger("10");
-		BigInteger fact = factorial(number);
-		int zeroCount = 0;
-		while (fact.mod(ten).compareTo(zero) == 0){
-			fact = fact.divide(ten);
-			zeroCount += 1;
-		}
-		return zeroCount;
+	
+	public static int getFactorFive(int number){
+		int arg1 = 0;
+		while (Math.pow(5, arg1) < number)
+			arg1++;
+		return arg1;
 	}
 }

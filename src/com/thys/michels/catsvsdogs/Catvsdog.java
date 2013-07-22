@@ -1,4 +1,4 @@
-package com.thys.michels.codechef;
+package com.thys.michels.catsvsdogs;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -9,19 +9,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
-public class EnormousInput extends PrintWriter {
-
+public class Catvsdog extends PrintWriter {
 	private BufferedReader r;
 	private String line;
 	private StringTokenizer st;
 	private String token;
 
-	public EnormousInput(InputStream i) {
+	public Catvsdog(InputStream i) {
 		super(new BufferedOutputStream(System.out));
 		r = new BufferedReader(new InputStreamReader(i));
 	}
-	public EnormousInput(InputStream i, OutputStream o) {
+	public Catvsdog(InputStream i, OutputStream o) {
 		super(new BufferedOutputStream(o));
 		r = new BufferedReader(new InputStreamReader(i));
 	}
@@ -55,19 +55,35 @@ public class EnormousInput extends PrintWriter {
 	public boolean hasMoreTokens() {
 			return peekToken() != null;
 	}
-	public static void main(String[] args) {
-		String data = "7 3\n 1\n 51 \n 966369\n 7\n 9\n 999996\n 11\n";
-		System.setIn(new ByteArrayInputStream(data.getBytes()));
-		EnormousInput io = new EnormousInput(System.in, System.out);
-		Long n = io.getLong();
-		Long k = io.getLong();
-		Long totalDivByK = new Long(0);
-		while (io.hasMoreTokens()) {
-			Long val = io.getLong();
-			if (val <= Math.pow(10, 7) && val%k==0)
-				totalDivByK++;
-		}
-		System.out.println(totalDivByK);
-	}
 
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		String data = "2 \n 1 1 2\n C1 D1 \n D1 C1\n 1 2 4\n C1 D1 \n C1 D1 \n C1 D2 \n D2 C1 \n";
+		System.setIn(new ByteArrayInputStream(data.getBytes()));
+		Catvsdog io = new Catvsdog(System.in, System.out);
+		Long testcase = io.getLong();
+		if (testcase <= 100){
+			while (io.hasMoreTokens()) {
+				TreeMap<String, Long> mapCatDogs = new TreeMap<String, Long>();
+				Long c = io.getLong();
+				Long d = io.getLong();
+				Long v = io.getLong();
+				if (1 <=c && d <= 100 && v >=0 && v <= 500){
+					for (int k = 1; k <= v*2; k++){
+						String out = io.getWord();
+						if (mapCatDogs.containsKey(out)){
+							if (k%2!=0) mapCatDogs.put(out,mapCatDogs.get(out)+1);
+						}
+						else{
+							if (k%2==0) mapCatDogs.put(out,(long) -1);
+							else mapCatDogs.put(out,(long) 1);
+						}
+					}
+					System.out.println(mapCatDogs.get(mapCatDogs.firstKey()));
+				}
+			}
+		}
+	}
 }

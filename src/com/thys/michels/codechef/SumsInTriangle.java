@@ -1,4 +1,4 @@
-package com.thys.michels.catsvsdogs;
+package com.thys.michels.codechef;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -9,19 +9,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 
-public class Catvsdog extends PrintWriter {
+public class SumsInTriangle extends PrintWriter {
+
 	private BufferedReader r;
 	private String line;
 	private StringTokenizer st;
 	private String token;
 
-	public Catvsdog(InputStream i) {
+	public SumsInTriangle(InputStream i) {
 		super(new BufferedOutputStream(System.out));
 		r = new BufferedReader(new InputStreamReader(i));
 	}
-	public Catvsdog(InputStream i, OutputStream o) {
+	public SumsInTriangle(InputStream i, OutputStream o) {
 		super(new BufferedOutputStream(o));
 		r = new BufferedReader(new InputStreamReader(i));
 	}
@@ -51,38 +51,42 @@ public class Catvsdog extends PrintWriter {
 			    } catch (IOException e) { }
 			return token;
 	}
-	public int getInt() {
-			return Integer.parseInt(nextToken());
-	}
 	
 	public boolean hasMoreTokens() {
 			return peekToken() != null;
 	}
+	
+	public int getInt() {
+		return Integer.parseInt(nextToken());
+	 }
 
-	public static void main(String[] args) {
-		String data="2\n1 1 2\nC1 D1\nD1 C1\n1 2 4\nC1 D1\nC1 D1\nC1 D2\nD2 C1\n1 2 4\nC1 D1\nC1 D1\nC1 D2\nD2 C1";
-		System.setIn(new ByteArrayInputStream(data.getBytes()));
-		Catvsdog io = new Catvsdog(System.in, System.out);
-		Long testcase = io.getLong();
-		for (int ktestcase=0; ktestcase<testcase && testcase<=100; ktestcase++) {
-				TreeMap<String, Long> mapCatDogs = new TreeMap<String, Long>();
-				Integer c = io.getInt();
-				Integer d = io.getInt();
-				Integer v = io.getInt();
-				if (1 <=c && d <= 100 && v >=0 && v <= 500){
-					for (int k = 1; k <= v*2; k++){
-						String out = io.getWord();
-						if (mapCatDogs.containsKey(out)){
-							if (k%2!=0) mapCatDogs.put(out,mapCatDogs.get(out)+1);
-						}
-						else{
-							if (k%2==0) mapCatDogs.put(out,(long) -1);
-							else mapCatDogs.put(out,(long) 1);
-						}
-					}
-					System.out.println(mapCatDogs.get(mapCatDogs.firstKey()));
-				}
-		}
-		io.close();
+	public static int fact(int number){
+		if (number == 1)
+			return 1;
+		return fact(number-1)+number;
 	}
+	//Moving index
+	public static void main(String[] args) {
+		String data = "2\n3\n1\n2 1\n1 2 3\n4\n1\n1 2\n4 1 2\n2 3 1 1\n";
+		System.setIn(new ByteArrayInputStream(data.getBytes()));
+		SumsInTriangle io = new SumsInTriangle(System.in, System.out);
+		int n = io.getInt();
+		for (int k = 0; k<n && n<100; k++){
+			int c = io.getInt();
+			System.out.println("c"+c);
+			int counter = 0;
+			for (int m = 0; m < fact(c); m++){
+				if (m == 0)
+					counter=io.getInt();
+				else{
+					int val1= io.getInt();
+					int val2 = io.getInt();
+					counter+=Math.max(val1, val2);
+					System.out.println(m + " " + val1  + " " + val2 + " " + counter);
+				}
+			}
+			System.out.println("Hier" + counter);
+		}
+	}
+
 }

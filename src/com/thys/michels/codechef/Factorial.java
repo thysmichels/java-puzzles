@@ -1,19 +1,11 @@
 package com.thys.michels.codechef;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Factorial {
 	public static void main(String[] args) {
-		String data = "6 \n 3 \n 60 \n 100 \n 1024 \n 23456\n 8735373\n";
-		InputStream stdin = System.in;
-		System.setIn(new ByteArrayInputStream(data.getBytes()));
-		Scanner scanner = new Scanner(System.in);
-		System.setIn(stdin);
-		//Scanner scanner = new Scanner(new BufferedInputStream(System.in), "UTF-8");
+		Scanner scanner = new Scanner(new BufferedInputStream(System.in), "UTF-8");
 		scanner.nextLine();
 		String[] fields = scanner.useDelimiter("\\A").next().trim().split("[\\r\\n]+");
 		for (String field : fields){

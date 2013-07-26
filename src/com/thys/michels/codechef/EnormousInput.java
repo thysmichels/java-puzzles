@@ -56,18 +56,15 @@ public class EnormousInput extends PrintWriter {
 			return peekToken() != null;
 	}
 	public static void main(String[] args) {
-		String data = "7 3\n 1\n 51 \n 966369\n 7\n 9\n 999996\n 11\n";
-		System.setIn(new ByteArrayInputStream(data.getBytes()));
 		EnormousInput io = new EnormousInput(System.in, System.out);
 		Long n = io.getLong();
 		Long k = io.getLong();
 		Long totalDivByK = new Long(0);
 		while (io.hasMoreTokens()) {
 			Long val = io.getLong();
-			if (val <= Math.pow(10, 7) && val%k==0)
+			if (val <= Math.pow(10, 9) && val%k==0)
 				totalDivByK++;
 		}
 		System.out.println(totalDivByK);
 	}
-
 }

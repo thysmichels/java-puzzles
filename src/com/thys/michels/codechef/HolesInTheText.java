@@ -1,4 +1,4 @@
-package com.thys.michels.catsvsdogs;
+package com.thys.michels.codechef;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -8,20 +8,27 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.TreeMap;
 
-public class Catvsdog extends PrintWriter {
+public class HolesInTheText extends PrintWriter{
+
+	private static final Set<Character> VALUESPLUSONE = new HashSet<Character>(Arrays.asList(new Character[]{'A', 'D', 'O', 'P','R'}));
+	private static final Set<Character> VALUESPLUSTWO = new HashSet<Character>(Arrays.asList(new Character[]{'B'}));
+	
 	private BufferedReader r;
 	private String line;
 	private StringTokenizer st;
 	private String token;
 
-	public Catvsdog(InputStream i) {
+	public HolesInTheText(InputStream i) {
 		super(new BufferedOutputStream(System.out));
 		r = new BufferedReader(new InputStreamReader(i));
 	}
-	public Catvsdog(InputStream i, OutputStream o) {
+	public HolesInTheText(InputStream i, OutputStream o) {
 		super(new BufferedOutputStream(o));
 		r = new BufferedReader(new InputStreamReader(i));
 	}
@@ -32,6 +39,9 @@ public class Catvsdog extends PrintWriter {
 
 	 public String getWord() {
 			return nextToken().trim();
+	 }
+	 public int getInt() {
+			return Integer.parseInt(nextToken());
 	 }
 	 
 	 private String nextToken() {
@@ -51,38 +61,25 @@ public class Catvsdog extends PrintWriter {
 			    } catch (IOException e) { }
 			return token;
 	}
-	public int getInt() {
-			return Integer.parseInt(nextToken());
-	}
 	
 	public boolean hasMoreTokens() {
 			return peekToken() != null;
 	}
-
 	public static void main(String[] args) {
-		String data="2\n1 1 2\nC1 D1\nD1 C1\n1 2 4\nC1 D1\nC1 D1\nC1 D2\nD2 C1\n1 2 4\nC1 D1\nC1 D1\nC1 D2\nD2 C1";
+		String data = "2\nCODECHEF\nDRINKEATCODE\n";
 		System.setIn(new ByteArrayInputStream(data.getBytes()));
-		Catvsdog io = new Catvsdog(System.in, System.out);
-		Long testcase = io.getLong();
-		for (int ktestcase=0; ktestcase<testcase && testcase<=100; ktestcase++) {
-				TreeMap<String, Long> mapCatDogs = new TreeMap<String, Long>();
-				Integer c = io.getInt();
-				Integer d = io.getInt();
-				Integer v = io.getInt();
-				if (1 <=c && d <= 100 && v >=0 && v <= 500){
-					for (int k = 1; k <= v*2; k++){
-						String out = io.getWord();
-						if (mapCatDogs.containsKey(out)){
-							if (k%2!=0) mapCatDogs.put(out,mapCatDogs.get(out)+1);
-						}
-						else{
-							if (k%2==0) mapCatDogs.put(out,(long) -1);
-							else mapCatDogs.put(out,(long) 1);
-						}
-					}
-					System.out.println(mapCatDogs.get(mapCatDogs.firstKey()));
-				}
+		HolesInTheText io = new HolesInTheText(System.in, System.out);
+		int T = io.getInt();
+		for (int k = 0; k < T && T<=40; k++){
+			char[] word = io.getWord().toCharArray();
+			Integer counter = 0;
+			for (int charword = 0; charword < word.length && word.length < 100; charword++){
+				if (VALUESPLUSONE.contains(word[charword]))
+					counter++;
+				else if (VALUESPLUSTWO.contains(word[charword]))
+					counter+=2;
+			}
+			System.out.println(counter);
 		}
-		io.close();
 	}
 }

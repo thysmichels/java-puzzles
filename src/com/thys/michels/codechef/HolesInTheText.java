@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 public class HolesInTheText extends PrintWriter{
 
-	private static final Set<Character> VALUESPLUSONE = new HashSet<Character>(Arrays.asList(new Character[]{'A', 'D', 'O', 'P','R'}));
+	private static final Set<Character> VALUESPLUSONE = new HashSet<Character>(Arrays.asList(new Character[]{'A', 'D', 'Q','O', 'P','R'}));
 	private static final Set<Character> VALUESPLUSTWO = new HashSet<Character>(Arrays.asList(new Character[]{'B'}));
 	
 	private BufferedReader r;

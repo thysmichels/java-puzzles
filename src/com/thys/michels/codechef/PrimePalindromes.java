@@ -1,63 +1,17 @@
 package com.thys.michels.codechef;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.StringTokenizer;
 
-public class PrimePalindromes extends PrintWriter {
-	private BufferedReader r;
-	private String line;
-	private StringTokenizer st;
-	private String token;
+public class PrimePalindromes {
 
-	public PrimePalindromes(InputStream i) {
-		super(new BufferedOutputStream(System.out));
-		r = new BufferedReader(new InputStreamReader(i));
-	}
-	public PrimePalindromes(InputStream i, OutputStream o) {
-		super(new BufferedOutputStream(o));
-		r = new BufferedReader(new InputStreamReader(i));
-	}
-	   
-	public long getLong() {
-		return Long.parseLong(nextToken().trim());
-	 }
+	private static int counter;
+	private static long[] listOfPalindromes;
 
-	 public String getWord() {
-			return nextToken().trim();
-	 }
-	 
-	 private String nextToken() {
-			String ans = peekToken();
-			token = null;
-			return ans;
-	 }
-	 private String peekToken() {
-			if (token == null) 
-			    try {
-				while (st == null || !st.hasMoreTokens()) {
-				    line = r.readLine();
-				    if (line == null) return null;
-				    st = new StringTokenizer(line);
-				}
-				token = st.nextToken();
-			    } catch (IOException e) { }
-			return token;
+	public static long[] generatePalindromes(long number)
+	{
+		return null;
 	}
-	
-	public boolean hasMoreTokens() {
-			return peekToken() != null;
-	}
-	
-	public int getInt() {
-		return Integer.parseInt(nextToken());
-	 }
 	
 	public static boolean isPalindrome(long number) {
 	    long original = number;
@@ -70,26 +24,30 @@ public class PrimePalindromes extends PrintWriter {
 	    return reverse == original;
 	}
 	
-	public static void main(String[] args) {
-		String data = "99000\n";
-		System.setIn(new ByteArrayInputStream(data.getBytes()));
-		PrimePalindromes io = new PrimePalindromes(System.in, System.out);
-		long palindromeVal = io.getLong();
+	public static boolean isPrime(long number)
+	{
+		for (int divisor = 2; divisor <= number / 2; divisor++){
+			if (number % divisor == 0) 
+				return false;
+		}
+		return true;
+	}
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		//String data = "99000\n";
+		//System.setIn(new ByteArrayInputStream(data.getBytes()));
+		java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader (System.in));
+		long palindromeVal = Long.parseLong(r.readLine());
 		if (palindromeVal>=1 && palindromeVal <=1000000){
-			boolean resultflag = false;
-			while (resultflag == false){
-				if (isPalindrome(palindromeVal)){
-					boolean flagPrime=true;
-					for (int divisor = 2; divisor <= palindromeVal / 2; divisor++){
-						if (palindromeVal % divisor == 0) 
-							flagPrime = false;
-					}
-					if (flagPrime==true){
+			listOfPalindromes = generatePalindromes(palindromeVal);
+			counter = 0;
+			boolean resultflag = true;
+			while (resultflag){
+				if (isPrime(palindromeVal)){
 						System.out.println(palindromeVal);
-						resultflag = true;
-					}
+						resultflag = false;
 				}
-				palindromeVal++;
+				counter++;
 			}	
 		}
 	}

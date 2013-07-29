@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 /*
@@ -81,29 +82,26 @@ public class ZipSong extends PrintWriter{
 		System.setIn(new ByteArrayInputStream(data.getBytes()));
 		TreeMap<Long, String> listOfSongsAndAlbums = new TreeMap<Long, String>(Collections.reverseOrder());
 		ZipSong io = new ZipSong(System.in, System.out);
-		HashMap<Long, Long> songTotalAndSelect = new HashMap<Long, Long>();
-		songTotalAndSelect.put(io.getLong(), io.getLong());
-		Long rowCounter = new Long(0);
-		while (io.hasMoreTokens()) {
-			rowCounter++;
-			if (rowCounter <= songTotalAndSelect.keySet().iterator().next()){
-				Long songCount = io.getLong();
-				String songName = io.getWord();
-			    if (songCount >= 0 && songCount <= Math.pow(10,12) && songName.length()<=30 && songName.matches("^[a-z0-9_]+")){
-			    	if (listOfSongsAndAlbums.size() == 0)
-			    		listOfSongsAndAlbums.put(rowCounter*songCount, songName);
-			    	else if (listOfSongsAndAlbums.size() < songTotalAndSelect.values().iterator().next() && (rowCounter*songCount) != listOfSongsAndAlbums.firstKey())
-			    		listOfSongsAndAlbums.put(rowCounter*songCount, songName);
-			    	else if ((rowCounter*songCount) > listOfSongsAndAlbums.firstKey() && (rowCounter*songCount) != listOfSongsAndAlbums.firstKey()){
-			    		listOfSongsAndAlbums.remove(listOfSongsAndAlbums.lastKey());
-			    		listOfSongsAndAlbums.put(rowCounter*songCount, songName);
-			    	}
+		long songTotal = io.getLong();
+		long songsToSelect = io.getLong();
+	
+		for (int songsOnAlbum = 1; songsOnAlbum<=songTotal; songsOnAlbum++){
+			long songCount = io.getLong();
+			String songName = io.getWord();
+			if (songCount >= 0 && songCount <= Math.pow(10,12) && songName.length()<=30 && songName.matches("^[a-z0-9_]+")){
+			    if (listOfSongsAndAlbums.size() == 0)
+			    	listOfSongsAndAlbums.put(songsOnAlbum*songCount, songName);
+			    else if (listOfSongsAndAlbums.size() < songsToSelect && (songsOnAlbum*songCount) != listOfSongsAndAlbums.firstKey())
+			    	listOfSongsAndAlbums.put(songsOnAlbum*songCount, songName);
+			    else if ((songsOnAlbum*songCount) > listOfSongsAndAlbums.firstKey() && (songsOnAlbum*songCount) != listOfSongsAndAlbums.firstKey()){
+			    	listOfSongsAndAlbums.remove(listOfSongsAndAlbums.lastKey());
+			    	listOfSongsAndAlbums.put(songsOnAlbum*songCount, songName);
 			    }
 			}
 		}
 			
 		for (String songResult : listOfSongsAndAlbums.values())
-				System.out.println(songResult);
+				io.println(songResult);
 		  
 		io.close();
 	}

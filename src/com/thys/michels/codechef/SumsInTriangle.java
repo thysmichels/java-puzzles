@@ -1,92 +1,37 @@
 package com.thys.michels.codechef;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.StringTokenizer;
 
-public class SumsInTriangle extends PrintWriter {
+public class SumsInTriangle {
 
-	private BufferedReader r;
-	private String line;
-	private StringTokenizer st;
-	private String token;
-
-	public SumsInTriangle(InputStream i) {
-		super(new BufferedOutputStream(System.out));
-		r = new BufferedReader(new InputStreamReader(i));
-	}
-	public SumsInTriangle(InputStream i, OutputStream o) {
-		super(new BufferedOutputStream(o));
-		r = new BufferedReader(new InputStreamReader(i));
-	}
-	   
-	public long getLong() {
-		return Long.parseLong(nextToken().trim());
-	 }
-
-	 public String getWord() {
-			return nextToken().trim();
-	 }
-	 
-	 private String nextToken() {
-			String ans = peekToken();
-			token = null;
-			return ans;
-	 }
-	 private String peekToken() {
-			if (token == null) 
-			    try {
-				while (st == null || !st.hasMoreTokens()) {
-				    line = r.readLine();
-				    if (line == null) return null;
-				    st = new StringTokenizer(line);
-				}
-				token = st.nextToken();
-			    } catch (IOException e) { }
-			return token;
-	}
-	
-	public boolean hasMoreTokens() {
-			return peekToken() != null;
-	}
-	
-	public int getInt() {
-		return Integer.parseInt(nextToken());
-	 }
-
-	public static int fact(int number){
-		if (number == 1)
-			return 1;
-		return fact(number-1)+number;
-	}
-	//Moving index
-	public static void main(String[] args) {
-		String data = "2\n3\n1\n2 1\n1 2 3\n4\n1\n1 2\n4 1 2\n2 3 1 1\n";
-		System.setIn(new ByteArrayInputStream(data.getBytes()));
-		SumsInTriangle io = new SumsInTriangle(System.in, System.out);
-		int n = io.getInt();
-		for (int k = 0; k<n && n<100; k++){
-			int c = io.getInt();
-			System.out.println("c"+c);
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		//String data = "1000\n3\n1\n2 1\n1 2 3\n4\n1\n1 2\n4 1 2\n2 3 1 1\n4\n1\n1 3\n2 1 1\n1 2 1 1\n";
+		//System.setIn(new ByteArrayInputStream(data.getBytes()));
+		java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader (System.in));
+		long n = Long.parseLong(r.readLine().trim());
+		for (long k = 0; k<n && n<1000; k++){
+			long c = Long.parseLong(r.readLine().trim());
+			long summax = 0;
 			int counter = 0;
-			for (int m = 0; m < fact(c); m++){
+			for (long m = 0; m < c && c <100; m++){
+				String[] val = r.readLine().trim().split("\\s+");
 				if (m == 0)
-					counter=io.getInt();
+					summax =Long.parseLong(val[0]);
 				else{
-					int val1= io.getInt();
-					int val2 = io.getInt();
-					counter+=Math.max(val1, val2);
-					System.out.println(m + " " + val1  + " " + val2 + " " + counter);
+					
+					if (Long.parseLong(val[counter]) < Long.parseLong(val[counter+1])){
+						summax += Long.parseLong(val[counter+1]);
+						counter++;
+					}
+					else{
+						summax += Long.parseLong(val[counter]);
+						if (counter > 0)
+							counter--;
+					}	
 				}
 			}
-			System.out.println("Hier" + counter);
+			System.out.println(summax);
 		}
 	}
-
 }
